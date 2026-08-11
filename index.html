@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#000">
+<title>Don Omar Radio</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#fff}
+body{display:flex;justify-content:center;align-items:center}
+
+.top-clock{
+position:fixed;top:10px;left:0;right:0;text-align:center;z-index:100;
+font-size:20px;font-weight:300;letter-spacing:2px;color:#ff7a14;
+text-shadow:0 0 12px rgba(255,100,20,.7)
+}
+
+.container{
+position:relative;width:100vw;height:100vh;
+background:#000;overflow:hidden
+}
+
+/* TORNAMESA */
+.turntable{
+position:absolute;top:0;left:0;width:100%;height:100%;
+background:url('https://i.postimg.cc/JhRyzN2Q/IMG-4736.jpg') no-repeat center center;
+background-size:contain;
+transition:height .6s ease,top .6s ease
+}
+
+/* ZONA SPOTIFY */
+.spotify-panel{
+position:absolute;left:0;bottom:-55%;width:100%;height:50%;
+background:#080808;
+border-top:2px solid #ff5a1f;
+transition:bottom .6s ease;
+z-index:20;
+padding:8px
+}
+
+.spotify-panel.open{bottom:0}
+
+.spotify-header{
+height:32px;display:flex;align-items:center;
+justify-content:space-between;padding:0 8px;
+font-size:11px;letter-spacing:1.5px;color:#ff7a14
+}
+
+.spotify-name{
+font-weight:bold;color:#fff
+}
+
+.close-btn{
+border:1px solid #ff5a1f;background:#111;color:#ff7a14;
+border-radius:8px;padding:4px 10px;font-size:10px;
+cursor:pointer
+}
+
+.spotify-frame{
+width:100%;height:calc(100% - 32px);
+border:0;border-radius:12px;
+background:#121212
+}
+
+/* BOTONES */
+.btn{
+position:absolute;bottom:5%;width:28%;height:18%;
+cursor:pointer;z-index:10;
+border:3px solid rgba(255,69,0,.9);
+border-radius:18px;
+animation:neonPulse 2s infinite alternate;
+display:flex;flex-direction:column;align-items:center;
+justify-content:center;font-weight:bold;
+background:linear-gradient(135deg,rgba(0,0,0,.95),rgba(40,0,0,.92));
+backdrop-filter:blur(8px);
+transition:all .3s;
+text-decoration:none;color:#ff6b35;
+box-shadow:0 0 20px rgba(255,69,0,.5)
+}
+
+.btn:hover{
+transform:translateY(-5px) scale(1.05);
+border-color:#ff7a40
+}
+
+.btn.active{
+background:linear-gradient(135deg,rgba(50,12,2,.97),rgba(20,5,0,.97));
+box-shadow:0 0 30px rgba(255,69,0,.8);
+border-color:#ff8a50;
+transform:translateY(-3px) scale(1.03)
+}
+
+@keyframes neonPulse{
+0%{border-color:rgba(255,69,0,.6)}
+100%{border-color:rgba(255,69,0,1)}
+}
+
+.btn-icon{
+font-size:40px;margin-bottom:10px;
+filter:drop-shadow(0 0 7px rgba(255,90,30,.5))
+}
+
+.btn-text{
+font-family:'Arial Black',sans-serif;
+letter-spacing:2px;font-size:16px
+}
+
+.btn-status{
+position:absolute;bottom:7px;
+font-size:7px;letter-spacing:2px;color:#777
+}
+
+#btn-ron{left:4%}
+#btn-guaro{left:36%}
+#btn-viejos{left:68%}
+
+/* CUANDO SPOTIFY ESTÁ ABIERTO */
+.container.split .turntable{
+height:50%;
+top:0;
+background-size:contain
+}
+
+.container.split .btn{
+bottom:2%;
+height:13%;
+transform:scale(.78)
+}
+
+.container.split .btn:hover{
+transform:scale(.82) translateY(-3px)
+}
+
+.container.split .top-clock{
+font-size:15px
+}
+
+@media(max-width:600px){
+.btn{height:16%}
+.btn-icon{font-size:32px}
+.btn-text{font-size:13px}
+.spotify-panel{height:51%}
+.container.split .turntable{height:49%}
+.container.split .btn{bottom:1%;height:11%}
+}
+
+@media(max-width:480px){
+.top-clock{font-size:18px}
+.btn{height:15%}
+.btn-icon{font-size:28px;margin-bottom:6px}
+.btn-text{font-size:10px;letter-spacing:1px}
+.spotify-panel{height:52%}
+.container.split .turntable{height:48%}
+.container.split .btn{height:10%;bottom:1%}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-clock" id="topClock">00:00:00</div>
+
+<div class="container" id="container">
+
+<div class="turntable"></div>
+
+<!-- SPOTIFY EMBEBIDO -->
+<div class="spotify-panel" id="spotifyPanel">
+<div class="spotify-header">
+<span class="spotify-name" id="spotifyName">DON OMAR RADIO</span>
+<button class="close-btn" onclick="closeSpotify()">CERRAR</button>
+</div>
+<iframe id="spotifyFrame"
+class="spotify-frame"
+allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+loading="lazy"></iframe>
+</div>
+
+<!-- PLAYLIST 1 -->
+<a href="https://open.spotify.com/playlist/63FDBH6Adjor4HuSzu0pBe?si=HcvPeiCtTFKXnfHrpVNhvg&utm_source=copy-link&pi=kNqz121qR9SEi"
+class="btn" id="btn-ron"
+target="_blank"
+onclick="openPlaylist(event,0)">
+<div class="btn-icon">🎵</div>
+<div class="btn-text">RON AÑEJO</div>
+<div class="btn-status">SPOTIFY</div>
+</a>
+
+<!-- PLAYLIST 2 -->
+<a href="https://open.spotify.com/playlist/2BEgpbPSIEHhj3x8eWqwIO?si=PEV9GjVlQS2iMQs9hzwdCg&utm_source=copy-link&pi=awQOpnl7Rj-PL"
+class="btn" id="btn-guaro"
+target="_blank"
+onclick="openPlaylist(event,1)">
+<div class="btn-icon">🥃</div>
+<div class="btn-text">GUARO HTA</div>
+<div class="btn-status">SPOTIFY</div>
+</a>
+
+<!-- PLAYLIST 3 -->
+<a href="https://open.spotify.com/playlist/3mW1tGh25uqPzC2lpuEhnX?si=vGTNCkxARaWz8x8yYw7wuQ&utm_source=copy-link&pi=1kCp4njXTXysI"
+class="btn" id="btn-viejos"
+target="_blank"
+onclick="openPlaylist(event,2)">
+<div class="btn-icon">💿</div>
+<div class="btn-text">VIEJOS AMORES</div>
+<div class="btn-status">SPOTIFY</div>
+</a>
+
+</div>
+
+<script>
+function pad(n){return n<10?'0'+n:''+n}
+
+function updateClock(){
+var d=new Date();
+document.getElementById('topClock').textContent=
+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())
+}
+
+var playlists=[
+{
+name:'RON AÑEJO',
+id:'63FDBH6Adjor4HuSzu0pBe'
+},
+{
+name:'GUARO HTA',
+id:'2BEgpbPSIEHhj3x8eWqwIO'
+},
+{
+name:'VIEJOS AMORES',
+id:'3mW1tGh25uqPzC2lpuEhnX'
+}
+];
+
+var container=document.getElementById('container');
+var panel=document.getElementById('spotifyPanel');
+var frame=document.getElementById('spotifyFrame');
+var nameBox=document.getElementById('spotifyName');
+var buttons=document.querySelectorAll('.btn');
+
+function openPlaylist(e,i){
+e.preventDefault();
+
+var p=playlists[i];
+
+frame.src='https://open.spotify.com/embed/playlist/'+p.id+'?utm_source=generator';
+nameBox.textContent=p.name;
+
+container.classList.add('split');
+panel.classList.add('open');
+
+buttons.forEach(function(b,n){
+b.classList.toggle('active',n===i)
+});
+}
+
+function closeSpotify(){
+panel.classList.remove('open');
+container.classList.remove('split');
+
+setTimeout(function(){
+frame.src='';
+},600);
+
+buttons.forEach(function(b){
+b.classList.remove('active')
+});
+}
+
+updateClock();
+setInterval(updateClock,1000);
+</script>
+
+</body>
+</html>
