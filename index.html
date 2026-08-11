@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+<title>Don Omar Radio</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#fff}
+body{display:flex;justify-content:center;align-items:center}
+.top-clock{position:fixed;top:10px;left:0;right:0;text-align:center;z-index:100;font-size:20px;font-weight:300;letter-spacing:2px;color:#ff7a14;text-shadow:0 0 12px rgba(255,100,20,.7)}
+.container{position:relative;width:100vw;height:90vh;background:url('https://i.postimg.cc/JhRyzN2Q/IMG-4736.jpg') no-repeat center bottom;background-size:contain;padding-top:60px}
+.cassette-display{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);width:42%;min-width:230px;max-width:390px;padding:13px 18px;text-align:center;border-radius:10px;background:linear-gradient(180deg,rgba(8,8,8,.94),rgba(25,25,25,.92));border:1px solid rgba(255,110,40,.8);box-shadow:0 0 18px rgba(255,70,20,.35),inset 0 0 15px rgba(255,90,30,.08);z-index:8;pointer-events:none;transition:.35s ease}
+.cassette-display.active{box-shadow:0 0 28px rgba(255,70,20,.65),inset 0 0 20px rgba(255,90,30,.12)}
+.display-live{font-size:8px;letter-spacing:3px;color:#ff3b20;margin-bottom:5px;font-weight:bold}
+.display-live span{display:inline-block;width:6px;height:6px;border-radius:50%;background:#ff2600;margin-right:5px;box-shadow:0 0 8px #ff2600;animation:livePulse 1s infinite}
+.display-title{font-family:'Arial Black',Arial,sans-serif;font-size:clamp(12px,1.5vw,17px);letter-spacing:2px;color:#fff;text-shadow:0 0 8px rgba(255,120,40,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@keyframes livePulse{50%{opacity:.3;transform:scale(.7)}}
+.btn{position:absolute;bottom:5%;width:28%;height:18%;cursor:pointer;z-index:10;border:2px solid rgba(255,69,0,.85);border-radius:18px;animation:neonPulse 2s infinite alternate;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:bold;background:linear-gradient(145deg,rgba(5,5,5,.96),rgba(42,12,4,.94));backdrop-filter:blur(8px);transition:all .3s;text-decoration:none;color:#ff6b35;box-shadow:0 0 20px rgba(255,69,0,.35),inset 0 0 18px rgba(255,90,20,.05);overflow:hidden}
+.btn:before{content:"";position:absolute;top:7px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,#ff6b35,transparent);opacity:.7}
+.btn:after{content:"";position:absolute;width:70px;height:70px;border-radius:50%;border:1px solid rgba(255,90,30,.15);box-shadow:0 0 0 8px rgba(255,90,30,.04),0 0 0 16px rgba(255,90,30,.025);pointer-events:none}
+.btn:hover{transform:translateY(-5px) scale(1.04);border-color:#ff7b42;box-shadow:0 0 30px rgba(255,69,0,.65),inset 0 0 20px rgba(255,90,20,.1)}
+.btn.active{border-color:#ff8a45;background:linear-gradient(145deg,rgba(35,10,3,.98),rgba(65,18,5,.96));box-shadow:0 0 30px rgba(255,69,0,.7),inset 0 0 22px rgba(255,90,20,.13);transform:translateY(-3px) scale(1.02)}
+@keyframes neonPulse{0%{border-color:rgba(255,69,0,.55)}100%{border-color:rgba(255,100,35,1)}}
+.btn-icon{font-size:34px;margin-bottom:8px;filter:drop-shadow(0 0 7px rgba(255,90,30,.5))}
+.btn-text{font-family:'Arial Black',sans-serif;letter-spacing:2px;font-size:15px;text-shadow:0 0 8px rgba(255,90,30,.35)}
+.btn-status{position:absolute;bottom:7px;font-size:7px;letter-spacing:2px;color:#777}
+#btn-ron{left:4%}#btn-guaro{left:36%}#btn-viejos{left:68%}
+@media(max-width:600px){
+.cassette-display{top:47%;width:48%;min-width:210px;padding:10px 12px}
+.display-title{font-size:12px}
+.btn{height:16%;border-radius:15px}
+.btn-icon{font-size:29px;margin-bottom:5px}
+.btn-text{font-size:11px;letter-spacing:1.5px}
+.btn-status{font-size:6px}
+}
+@media(max-width:480px){
+.top-clock{font-size:18px}
+.cassette-display{top:46%;width:52%}
+.btn{height:15%}
+.btn-icon{font-size:27px}
+.btn-text{font-size:10px}
+}
+</style>
+</head>
+<body>
+
+<div class="top-clock" id="topClock">00:00:00</div>
+
+<div class="container">
+
+<div class="cassette-display" id="cassetteDisplay">
+<div class="display-live"><span></span>DON OMAR RADIO · LIVE</div>
+<div class="display-title" id="displayTitle">SELECCIONA UNA PLAYLIST</div>
+</div>
+
+<a href="https://open.spotify.com/playlist/63FDBH6Adjor4HuSzu0pBe?si=HcvPeiCtTFKXnfHrpVNhvg&utm_source=copy-link&pi=kNqz121qR9SEi" class="btn" id="btn-ron" target="_blank" onclick="selectPlaylist(0)">
+<div class="btn-icon">🎵</div>
+<div class="btn-text">RON AÑEJO</div>
+<div class="btn-status">SPOTIFY</div>
+</a>
+
+<a href="https://open.spotify.com/playlist/2BEgpbPSIEHhj3x8eWqwIO?si=PEV9GjVlQS2iMQs9hzwdCg&utm_source=copy-link&pi=awQOpnl7Rj-PL" class="btn" id="btn-guaro" target="_blank" onclick="selectPlaylist(1)">
+<div class="btn-icon">🥃</div>
+<div class="btn-text">GUARO HTA</div>
+<div class="btn-status">SPOTIFY</div>
+</a>
+
+<a href="https://open.spotify.com/playlist/3mW1tGh25uqPzC2lpuEhnX?si=vGTNCkxARaWz8x8yYw7wuQ&utm_source=copy-link&pi=1kCp4njXTXysI" class="btn" id="btn-viejos" target="_blank" onclick="selectPlaylist(2)">
+<div class="btn-icon">💿</div>
+<div class="btn-text">VIEJOS AMORES</div>
+<div class="btn-status">SPOTIFY</div>
+</a>
+
+</div>
+
+<script>
+function pad(n){return n<10?'0'+n:''+n}
+function updateClock(){
+var d=new Date();
+document.getElementById('topClock').textContent=pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())
+}
+var names=['RON AÑEJO','GUARO HTA','VIEJOS AMORES'];
+var buttons=document.querySelectorAll('.btn');
+var title=document.getElementById('displayTitle');
+var display=document.getElementById('cassetteDisplay');
+
+function selectPlaylist(i){
+title.textContent=names[i];
+display.classList.add('active');
+buttons.forEach(function(btn,index){btn.classList.toggle('active',index===i)})
+}
+updateClock();
+setInterval(updateClock,1000);
+</script>
+
+</body>
+</html>
